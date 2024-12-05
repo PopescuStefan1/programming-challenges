@@ -30,17 +30,30 @@ function readLine() {
 
 function whatFlavors(cost, money) {
   // Write your code here
-  for (let i = 0; i < cost.length - 1; i++) {
-    if (cost[i] >= money) {
-      continue;
+
+  // First solution:
+  // for(let i = 0; i < cost.length - 1; i++) {
+  //     if(cost[i] >= money) {
+  //         continue;
+  //     }
+
+  //     for(let j = i + 1; j < cost.length; j++) {
+  //         if(cost[i] + cost[j] === money) {
+  //             console.log(`${i + 1} ${j + 1}`);
+  //             return;
+  //         }
+  //     }
+  // }
+
+  // Improved version using map:
+  const pricesMap = new Map();
+  for (let i = 0; i < cost.length; i++) {
+    if (pricesMap.has(money - cost[i])) {
+      console.log(`${pricesMap.get(money - cost[i]) + 1} ${i + 1}`);
+      return;
     }
 
-    for (let j = i + 1; j < cost.length; j++) {
-      if (cost[i] + cost[j] === money) {
-        console.log(`${i + 1} ${j + 1}`);
-        return;
-      }
-    }
+    pricesMap.set(cost[i], i);
   }
 }
 
