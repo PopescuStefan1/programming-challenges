@@ -15,15 +15,31 @@ var maxProfit = function (prices) {
   // return bestProfit;
 
   // Second solution (one pass) - Time: O(n), Space: O(1):
+  // let bestProfit = 0;
+  // let current = 0;
+  // for(let i = 1; i < prices.length; i++) {
+  //     current += prices[i] - prices[i - 1];
+  //     if(current > bestProfit) {
+  //         bestProfit = current;
+  //     }
+
+  //     current = Math.max(current, 0);
+  // }
+
+  // return bestProfit;
+
+  // Third solution (one pass) - Time: O(n), Space: O(1):
   let bestProfit = 0;
-  let current = 0;
+  let cheapest = prices[0];
   for (let i = 1; i < prices.length; i++) {
-    current += prices[i] - prices[i - 1];
-    if (current > bestProfit) {
-      bestProfit = current;
+    if (prices[i] < cheapest) {
+      cheapest = prices[i];
+      continue;
     }
 
-    current = Math.max(current, 0);
+    if (bestProfit < prices[i] - cheapest) {
+      bestProfit = prices[i] - cheapest;
+    }
   }
 
   return bestProfit;
