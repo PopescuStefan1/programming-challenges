@@ -11,26 +11,50 @@
  * @return {boolean}
  */
 var isBalanced = function (root) {
+  // First solution:
+  // if(!root) {
+  //     return true;
+  // }
+
+  // function dfs(node, height) {
+  //     if (!node) {
+  //         return height;
+  //     }
+
+  //     const leftHeight = dfs(node.left, height + 1);
+  //     const rightHeight = dfs(node.right, height + 1);
+
+  //     if(Math.abs(leftHeight - rightHeight) > 1) {
+  //         heightImbalance = true;
+  //     }
+
+  //     return Math.max(leftHeight, rightHeight);
+  // }
+
+  // let heightImbalance = false;
+  // dfs(root, 0);
+  // return !heightImbalance;
+
   if (!root) {
     return true;
   }
 
-  function dfs(node, height) {
+  function dfs(node) {
     if (!node) {
-      return height;
+      return 0;
     }
 
-    const leftHeight = dfs(node.left, height + 1);
-    const rightHeight = dfs(node.right, height + 1);
+    const leftHeight = dfs(node.left) + 1;
+    const rightHeight = dfs(node.right) + 1;
 
     if (Math.abs(leftHeight - rightHeight) > 1) {
-      heightImbalance = true;
+      imbalanceFound = true;
     }
 
     return Math.max(leftHeight, rightHeight);
   }
 
-  let heightImbalance = false;
-  dfs(root, 0);
-  return !heightImbalance;
+  let imbalanceFound = false;
+  dfs(root);
+  return !imbalanceFound;
 };
